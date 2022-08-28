@@ -92,7 +92,8 @@ Additionally, there are a bunch of included playthrough snapshots that play all 
 * Since savegames are stored in SRAM and SRAM get rebuilt each start (i don't how to change this), savegames will be lost each restart.
 * I don't know yet how to implement a switch to toggle fullscreen/windowed mode yet.
   Windowed mode can be set by changing line 90 of main.cpp to:
-SDL_Window* window = SDL_CreateWindow("Zelda3", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 480, SDL_WINDOW_RESIZABLE);
+  
+  SDL_Window* window = SDL_CreateWindow("Zelda3", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 480, SDL_WINDOW_RESIZABLE);
 
 ## License
 

@@ -123,5 +123,5 @@ MIT License
 
 ## Links
 
-mINI: https://github.com/pulzed/mINI
-SDL2: https://github.com/libsdl-org/SDL
+mINI: https://github.com/pulzed/mINI .
+SDL2: https://github.com/libsdl-org/SDL .

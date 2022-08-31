@@ -91,19 +91,13 @@ int main(int argc, char** argv) {
     // create a data structure
     mINI::INIStructure ini;
 
-    // write updates to file
-    file.write(ini);
-
-    // generate an INI file (overwrites any previous file)
-    file.generate(ini);
-
     // now we can read the file
     file.read(ini);
 
     // read a value
     std::string& screenmodetoggle = ini["screenmode"]["fullscreen"];
 
-    if (screenmodetoggle = "1") {
+    if (screenmodetoggle == "1") {
         int win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     else {
@@ -335,26 +329,32 @@ static void handleInput(int keyCode, int keyMod, bool pressed) {
             // next, create a structure that will hold data
             mINI::INIStructure ini;
 
+            // update a value
+            ini["screenmode"]["fullscreen"] = "0";
+
             // write updates to file
             file.write(ini);
 
-            // update a value
-            ini["screenmode"]["fullscreen"] = "0";
+            // generate an INI file (overwrites any previous file)
+            file.generate(ini);
         }
         break;
     case SDLK_PAGEUP:
         if (pressed) {
             // first, create a file instance
-            mINI::INIFile file("coinfig.ini");
+            mINI::INIFile file("config.ini");
 
             // next, create a structure that will hold data
             mINI::INIStructure ini;
 
+            // update a value
+            ini["screenmode"]["fullscreen"] = "1";
+
             // write updates to file
             file.write(ini);
 
-            // update a value
-            ini["screenmode"]["fullscreen"] = "1";
+            // generate an INI file (overwrites any previous file)
+            file.generate(ini);
         }
         break;
     case SDLK_BACKSPACE:

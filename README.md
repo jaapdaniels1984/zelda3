@@ -82,7 +82,7 @@ Additionally, the following commands are available:
 | T   | Toggle replay turbo   |
 | K   | Clear all input history from current snapshot  |
 | PageUp | Set trigger for fullscreen mode* |
-| PageDown | Set trigger for Windowed mode *|
+| PageDown | Set trigger for Windowed mode* |
 | F1-F10 | Load snapshot      |
 | Shift+F1-F10 | Save snapshot |
 | Ctrl+F1-F10 | Replay the snapshot |

@@ -4,16 +4,13 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <ini.h>
 #include <vector>
-
 #include <SDL.h>
-
 #include "snes/snes.h"
 #include "tracing.h"
-
 #include "types.h"
 #include "variables.h"
-
 #include "zelda_rtl.h"
 
 extern uint8 g_emulated_ram[0x20000];
@@ -69,6 +66,7 @@ void gamepadInit() {
 
 int input1_current_state;
 
+
 void setButtonState(int button, bool pressed) {
   // set key in constroller
   if (pressed) {
@@ -78,6 +76,39 @@ void setButtonState(int button, bool pressed) {
   }
 }
 
+// create a file instance
+mINI::INIFile file("config.ini");
+
+// create a data structure
+mINI::INIStructure ini;
+
+// write updates to file
+file.write(ini);
+
+// populate the structure
+ini["screenmode"]["fullscreen"] = "0";
+
+// generate an INI file (overwrites any previous file)
+file.generate(ini);
+
+// first, create a file instance
+mINI::INIFile file("myfile.ini");
+
+// next, create a structure that will hold data
+mINI::INIStructure ini;
+
+// now we can read the file
+file.read(ini);
+
+// read a value
+std::string& screenmodetoggle = ini["screenmode"]["fullscreen"];
+
+if (screenmodetoggle = "1") {
+    int win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
+}
+else {
+    int win_flags = SDL_WINDOW_RESIZABLE;
+}
 
 #undef main
 int main(int argc, char** argv) {
@@ -86,8 +117,10 @@ int main(int argc, char** argv) {
     printf("Failed to init SDL: %s\n", SDL_GetError());
     return 1;
   }
+  
   int win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
-  SDL_Window* window = SDL_CreateWindow("Zelda3", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 480, win_flags);
+
+  SDL_Window* window = SDL_CreateWindow("Zelda3", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1920, 1080, win_flags);
   if(window == NULL) {
     printf("Failed to create window: %s\n", SDL_GetError());
     return 1;
@@ -287,7 +320,7 @@ static void renderScreen(SDL_Renderer* renderer, SDL_Texture* texture) {
 
 
 static void handleInput(int keyCode, int keyMod, bool pressed) {
-  switch(keyCode) {
+    switch (keyCode) {
     case SDLK_z: setButtonState(0, pressed); break;
     case SDLK_a: setButtonState(1, pressed); break;
     case SDLK_RSHIFT: setButtonState(2, pressed); break;
@@ -313,35 +346,64 @@ static void handleInput(int keyCode, int keyMod, bool pressed) {
     case SDLK_0:
     case SDLK_MINUS:
     case SDLK_EQUALS:
-      if (pressed) {
-        SaveLoadSlot(
-          (keyMod & KMOD_CTRL) != 0 ? kSaveLoad_Replay : kSaveLoad_Load,
-          256 + (keyCode == SDLK_0 ? 9 : 
-                 keyCode == SDLK_MINUS ? 10 : 
-                 keyCode == SDLK_EQUALS ? 11 :
-                 keyCode == SDLK_BACKSPACE ? 12 :
-                 keyCode - SDLK_1));
-      }
-      break;
+        if (pressed) {
+            SaveLoadSlot(
+                (keyMod & KMOD_CTRL) != 0 ? kSaveLoad_Replay : kSaveLoad_Load,
+                256 + (keyCode == SDLK_0 ? 9 :
+                    keyCode == SDLK_MINUS ? 10 :
+                    keyCode == SDLK_EQUALS ? 11 :
+                    keyCode == SDLK_BACKSPACE ? 12 :
+                    keyCode - SDLK_1));
+        }
+        break;
 
-    case SDLK_F1: 
-    case SDLK_F2: 
-    case SDLK_F3: 
-    case SDLK_F4: 
-    case SDLK_F5: 
-    case SDLK_F6: 
-    case SDLK_F7: 
-    case SDLK_F8: 
-    case SDLK_F9: 
-    case SDLK_F10: 
-      if (pressed) {
-        SaveLoadSlot(
-          (keyMod & KMOD_CTRL) != 0 ? kSaveLoad_Replay : 
-          (keyMod & KMOD_SHIFT) != 0 ? kSaveLoad_Save : kSaveLoad_Load,
-          keyCode - SDLK_F1);
-      }
-      break;
-  }
+    case SDLK_F1:
+    case SDLK_F2:
+        if (pressed) {
+            // first, create a file instance
+            mINI::INIFile file("config.ini");
+
+            // next, create a structure that will hold data
+            mINI::INIStructure ini;
+
+            // write updates to file
+            file.write(ini);
+
+            // update a value
+            ini["screenmode"]["fullscreen"] = "0";
+        }
+        break;
+    case SDLK_F3:
+        if (pressed) {
+            // first, create a file instance
+            mINI::INIFile file("coinfig.ini");
+
+            // next, create a structure that will hold data
+            mINI::INIStructure ini;
+
+            // write updates to file
+            file.write(ini);
+
+            // update a value
+            ini["screenmode"]["fullscreen"] = "1";
+        }
+        break;
+    case SDLK_F4:
+    case SDLK_F5:
+    case SDLK_F6:
+    case SDLK_F7:
+    case SDLK_F8:
+    case SDLK_F9:
+    case SDLK_F10:
+        if (pressed) {
+            SaveLoadSlot(
+                (keyMod & KMOD_CTRL) != 0 ? kSaveLoad_Replay :
+                (keyMod & KMOD_SHIFT) != 0 ? kSaveLoad_Save : kSaveLoad_Load,
+                keyCode - SDLK_F1);
+        }
+        break;
+    }
+
 }
 
 

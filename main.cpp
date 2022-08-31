@@ -330,6 +330,36 @@ static void handleInput(int keyCode, int keyMod, bool pressed) {
     case SDLK_s: setButtonState(9, pressed); break;
     case SDLK_d: setButtonState(10, pressed); break;
     case SDLK_c: setButtonState(11, pressed); break;
+    case SDLK_PAGEDOWN:
+        if (pressed) {
+            // first, create a file instance
+            mINI::INIFile file("config.ini");
+
+            // next, create a structure that will hold data
+            mINI::INIStructure ini;
+
+            // write updates to file
+            file.write(ini);
+
+            // update a value
+            ini["screenmode"]["fullscreen"] = "0";
+        }
+        break;
+    case SDLK_PAGEUP:
+        if (pressed) {
+            // first, create a file instance
+            mINI::INIFile file("coinfig.ini");
+
+            // next, create a structure that will hold data
+            mINI::INIStructure ini;
+
+            // write updates to file
+            file.write(ini);
+
+            // update a value
+            ini["screenmode"]["fullscreen"] = "1";
+        }
+        break;
     case SDLK_BACKSPACE:
     case SDLK_1:
     case SDLK_2:
@@ -356,35 +386,7 @@ static void handleInput(int keyCode, int keyMod, bool pressed) {
 
     case SDLK_F1:
     case SDLK_F2:
-        if (pressed) {
-            // first, create a file instance
-            mINI::INIFile file("config.ini");
-
-            // next, create a structure that will hold data
-            mINI::INIStructure ini;
-
-            // write updates to file
-            file.write(ini);
-
-            // update a value
-            ini["screenmode"]["fullscreen"] = "0";
-        }
-        break;
     case SDLK_F3:
-        if (pressed) {
-            // first, create a file instance
-            mINI::INIFile file("coinfig.ini");
-
-            // next, create a structure that will hold data
-            mINI::INIStructure ini;
-
-            // write updates to file
-            file.write(ini);
-
-            // update a value
-            ini["screenmode"]["fullscreen"] = "1";
-        }
-        break;
     case SDLK_F4:
     case SDLK_F5:
     case SDLK_F6:

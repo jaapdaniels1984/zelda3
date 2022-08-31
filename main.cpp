@@ -85,9 +85,6 @@ mINI::INIStructure ini;
 // write updates to file
 file.write(ini);
 
-// populate the structure
-ini["screenmode"]["fullscreen"] = "0";
-
 // generate an INI file (overwrites any previous file)
 file.generate(ini);
 

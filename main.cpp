@@ -93,19 +93,19 @@ int main(int argc, char** argv) {
 
     // now we can read the file
     file.read(ini);
-
+    
     // read a value
     std::string& screenmodetoggle = ini["screenmode"]["fullscreen"];
+        
+    int win_flags = 0;
     
-    int win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
-
     if (screenmodetoggle == "1") {
-        int win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
+        win_flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
     }
     else {
-        int win_flags = SDL_WINDOW_RESIZABLE;
+        win_flags = SDL_WINDOW_RESIZABLE;
     }
-    
+
     SDL_Window* window = SDL_CreateWindow("Zelda3", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 512, 480, win_flags);
     if (window == NULL) {
         printf("Failed to create window: %s\n", SDL_GetError());

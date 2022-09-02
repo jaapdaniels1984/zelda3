@@ -131,3 +131,12 @@ mINI: https://github.com/pulzed/mINI
 
 SDL2: https://github.com/libsdl-org/SDL
 
+Credits:
+
+Caspar for helping me understand a lot of C++ basics (where in my code should i drop which type of code, rules around int variables).
+Shafton beleving in me.
+David helping me see the differences of variabletypes.
+Robin for trying to help me out so far.
+Alex for he could find the words that finnaly made me understand what Caspar was trying to tell me over and over again.
+snesrev for his original work.
+LukeUsher for his fork that i based my fork on.

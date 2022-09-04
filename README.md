@@ -131,6 +131,8 @@ mINI: https://github.com/pulzed/mINI
 
 SDL2: https://github.com/libsdl-org/SDL
 
+Please update those 2 yourself before building for the version given might get to be outdated.
+
 Credits:
 
 Caspar for helping me understand a lot of C++ basics (where in my code should i drop which type of code, rules around int variables).
